@@ -8,6 +8,8 @@ from .models import Todo
 
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.generics import get_object_or_404
 
 def home(request):
     return HttpResponse('<center><h1 style= "background-color: green">Welcome to todo app</h1></center>')
@@ -61,3 +63,39 @@ def todoDetail(request, pk):
     elif request.method == 'DELETE':
         todo.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class TodoListCreateAPIView(APIView):
+    def get(self, request):
+        queryset = Todo.objects.all()
+        serializer = TodoSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = TodoSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        return Response(serializer.data)
+
+class TodoDetailAPIView(APIView):
+    def get_object(self, pk):
+        todo = get_object_or_404(Todo, pk=pk)
+        return todo
+
+    def get(self,request, pk):
+        todo = self.get_object(pk= pk)
+        serializer = TodoSerializer(todo)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        todo = self.get_object(pk = pk)
+        serializer = TodoSerializer(todo, data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self,request, pk):
+        todo = self.get_object(pk = pk)
+        todo.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
