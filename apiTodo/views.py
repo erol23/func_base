@@ -8,8 +8,11 @@ from .models import Todo
 
 from rest_framework.response import Response
 from rest_framework import status
+
 from rest_framework.views import APIView
-from rest_framework.generics import get_object_or_404
+from rest_framework.generics import ListCreateAPIView, RetrieveAPIView, get_object_or_404
+
+from rest_framework import generics
 
 def home(request):
     return HttpResponse('<center><h1 style= "background-color: green">Welcome to todo app</h1></center>')
@@ -99,3 +102,10 @@ class TodoDetailAPIView(APIView):
         todo.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class TodoListCreateApi(generics. ListCreateAPIView):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+
+class TodoDetailApi(generics. RetrieveAPIView):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer

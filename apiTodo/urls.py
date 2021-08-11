@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, todoCreate, todoList, todo_List_create, todoDetail, TodoListCreateAPIView,TodoDetailAPIView
+from .views import TodoDetailApi, home, todoCreate, todoList, todo_List_create, todoDetail, TodoListCreateAPIView,TodoDetailAPIView, TodoListCreateApi
 
 urlpatterns = [
     path('', home),
@@ -9,4 +9,6 @@ urlpatterns = [
     path('todoDetail/<int:pk>/', todoDetail),
     path('todoCreateApi/', TodoListCreateAPIView.as_view()),
     path('todoDetailApi/<int:pk>/', TodoDetailAPIView.as_view()),
+    path('todoListApi/', TodoListCreateApi.as_view()),
+    path('todoDetailApi/<int:pk>/', TodoDetailApi.as_view())
 ]
