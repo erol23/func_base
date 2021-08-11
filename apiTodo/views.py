@@ -109,3 +109,4 @@ class TodoListCreateApi(generics. ListCreateAPIView):
 class TodoDetailApi(generics. RetrieveAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
+

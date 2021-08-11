@@ -10,5 +10,5 @@ urlpatterns = [
     path('todoCreateApi/', TodoListCreateAPIView.as_view()),
     path('todoDetailApi/<int:pk>/', TodoDetailAPIView.as_view()),
     path('todoListApi/', TodoListCreateApi.as_view()),
-    path('todoDetailApi/<int:pk>/', TodoDetailApi.as_view())
+    path('todoDetailApi/<int:pk>/', TodoDetailApi.as_view()),
 ]
